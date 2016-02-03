@@ -1,0 +1,16 @@
+{
+  "name": "dockerfile-builder",
+  "authors": [
+    "Philipp Wahala <philipp.wahala@gmail.com>"
+  ],
+  "description": "Build a Dockerfile via UI",
+  "keywords": [
+    "docker"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "~1.11",
+    "select2": "~4.0",
+    "autosize": "~3.0.14"
+  }
+}

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Dockerfile Builder</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>Dockerfile builder</h1>
+  </header>
+
+  <div class="builder-wrapper">
+
+    <div class="form-wrapper">
+      <h3>Configuration</h3>
+
+      <form class="builder-form js-builder-form" action="post">
+        <fieldset name="top">
+          <legend>Base</legend>
+
+          <div class="form-field-block-from form-field-block">
+            <div class="field-label">
+              <label>FROM*</label>
+              <div><a href="https://docs.docker.com/v1.8/reference/builder/#from" target="_blank" tabindex="-1">Docs</a></div>
+            </div>
+
+            <div class="field-body">
+              <select name="FROM" class="input-from js-input-from" style="width: 100%;">
+                <option disabled>Base image</option>
+                <option selected="selected">debian:jessie</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-field-block-maintainer form-field-block">
+            <div class="field-label">
+              <label>MAINTAINER</label>
+              <div><a href="https://docs.docker.com/v1.8/reference/builder/#maintainer" target="_blank" tabindex="-1">Docs</a></div>
+            </div>
+
+            <div class="field-body">
+              <input type="text" name="MAINTAINER-NAME" class="input-maintainer-name js-input-maintainer-name" placeholder="Name">
+              <input type="email" name="MAINTAINER-EMAIL" class="input-maintainer-email js-input-maintainer-email" placeholder="Email">
+            </div>
+          </div>
+
+          <div class="form-field-block-label form-field-block js-form-field-block-label">
+            <div class="field-label">
+              <label>LABEL</label>
+              <div><a href="https://docs.docker.com/v1.8/reference/builder/#label" target="_blank" tabindex="-1">Docs</a></div>
+            </div>
+
+            <div class="field-body">
+              <div class="field-input-group">
+                <input type="text" name="LABEL-KEY[]" class="input-label-key js-input-label-key" placeholder="Key"> =
+                <input type="text" name="LABEL-VALUE[]" class="input-label-value js-input-label-value" placeholder="Value">
+              </div>
+              <a href="" class="link-label-auto-add js-link-label-auto-add" data-type="label">+</a>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset name="main">
+          <legend>Main</legend>
+
+          <div class="form-main js-form-main">
+            <div class="form-field-block js-form-field-block">
+              <div class="field-label">
+                <label>RUN</label>
+                <div><a href="https://docs.docker.com/v1.8/reference/builder/#run" target="_blank" tabindex="-1">Docs</a></div>
+              </div>
+
+              <div class="field-body">
+                <textarea name="MAIN[]" data-instruction="RUN" class="js-main-value js-textarea"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="builder-add-links">
+            <a href="#" class="builder-add-run builder-add-entry">Add RUN</a>
+            <a href="#" class="builder-add-add builder-add-entry">Add ADD</a>
+            <a href="#" class="builder-add-copy builder-add-entry">Add COPY</a>
+            <a href="#" class="builder-add-env builder-add-entry">Add ENV</a>
+            <a href="#" class="builder-add-workdir builder-add-entry">Add WORKDIR</a>
+
+          </div>
+        </fieldset>
+
+        <fieldset name="bottom">
+          <legend>Final</legend>
+
+          <div class="form-field-block-entrypoint form-field-block">
+            <div class="field-label">
+              <label>ENTRYPOINT</label>
+              <div><a href="https://docs.docker.com/v1.8/reference/builder/#entrypoint" target="_blank" tabindex="-1">Docs</a></div>
+            </div>
+
+            <div class="field-body">
+              <div class="field-input-group">
+                <input type="text" name="ENTRYPOINT[]" class="input-entrypoint js-input-entrypoint" placeholder="Entrypoint">
+              </div>
+              <a href="" class="link-label-auto-add js-link-label-auto-add" data-type="label">+</a>
+            </div>
+          </div>
+
+          <div class="form-field-block-cmd form-field-block">
+            <div class="field-label">
+              <label>CMD</label>
+              <div><a href="https://docs.docker.com/v1.8/reference/builder/#cmd" target="_blank" tabindex="-1">Docs</a></div>
+            </div>
+
+            <div class="field-body">
+              <div class="field-input-group">
+                <input type="text" name="CMD[]" class="input-cmd js-input-cmd" placeholder="Command">
+              </div>
+              <a href="" class="link-label-auto-add js-link-label-auto-add" data-type="label">+</a>
+            </div>
+          </div>
+
+          <div class="form-field-block-volume form-field-block">
+            <div class="field-label">
+              <label>VOLUME</label>
+              <div><a href="https://docs.docker.com/v1.8/reference/builder/#volume" target="_blank" tabindex="-1">Docs</a></div>
+            </div>
+
+            <div class="field-body">
+              <div class="field-input-group">
+                <input type="text" name="VOLUME[]" class="input-volume js-input-volume" placeholder="Volume">
+              </div>
+              <a href="" class="link-label-auto-add js-link-label-auto-add" data-type="label">+</a>
+            </div>
+          </div>
+
+          <div class="form-field-block-expose form-field-block js-form-field-block-expose">
+            <div class="field-label">
+              <label>EXPOSE</label>
+              <div><a href="https://docs.docker.com/v1.8/reference/builder/#expose" target="_blank" tabindex="-1">Docs</a></div>
+            </div>
+
+            <div class="field-body">
+              <div class="field-input-group" data-index="0">
+                <input type="number" min="1" max="65535" maxlength="5" name="EXPOSE[0]" class="input-expose js-input-expose" placeholder="Port"> /
+                <label><input type="radio" name="EXPOSE-PORT[0]" checked class="input-expose-port-tcp input-expose-port js-input-expose-port-tcp"> tcp</label>
+                <label><input type="radio" name="EXPOSE-PORT[0]" class="input-expose-port-udp input-expose-port js-input-expose-port-udp"> udp</label>
+              </div>
+              <a href="" class="link-label-auto-add js-link-label-auto-add" data-type="label">+</a>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="form-actions">
+          <button type="submit" name="download" value="1" class="js-download">Download</button>
+          <button type="button" name="push" value="1" class="js-push">Push</button>
+          <button type="button" name="gist" value="1" class="js-create-gist">Save as Gist</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="output-wrapper">
+      <div class="output-inner">
+        <h3>Preview</h3>
+        <textarea class="output js-output" readonly placeholder="Start configuring your image to see the preview"></textarea>
+
+        <h3>Save as a secret <a href="https://gist.github.com/" target="_blank">gist</a></h3>
+        <p>Please create a <a href="https://github.com/settings/tokens/new?scopes=gist&description=dockerfile-builder" target="_blank">OAuth token with gist access</a> and paste it here:</p>
+        <input type="text" name="gist_token" class="gist-token js-gist-token" value="" maxlength="40"> <small></small>
+
+        <ul class="js-gist-list"></ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="js-template-run" style="display: none">
+  <div class="form-field-block js-form-field-block">
+    <div class="field-label">
+      <label>RUN</label>
+      <div><a href="https://docs.docker.com/v1.8/reference/builder/#run" target="_blank" tabindex="-1">Docs</a></div>
+    </div>
+
+    <div class="field-body">
+      <textarea name="MAIN[]" data-instruction="RUN" class="js-main-value js-textarea"></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="js-template-add" style="display: none">
+  <div class="form-field-block js-form-field-block">
+    <div class="field-label">
+      <label>ADD</label>
+      <div><a href="https://docs.docker.com/v1.8/reference/builder/#add" target="_blank" tabindex="-1">Docs</a></div>
+    </div>
+
+    <div class="field-body">
+      <input name="MAIN[]" data-instruction="ADD" class="js-main-value js-input" placeholder="">
+      <input name="MAIN[]" data-instruction="ADD" class="js-main-value-more js-input">
+    </div>
+  </div>
+</div>
+
+<div class="js-template-copy" style="display: none">
+  <div class="form-field-block js-form-field-block">
+    <div class="field-label">
+      <label>COPY</label>
+      <div><a href="https://docs.docker.com/v1.8/reference/builder/#copy" target="_blank" tabindex="-1">Docs</a></div>
+    </div>
+
+    <div class="field-body">
+      <input name="MAIN[]" data-instruction="COPY" class="js-main-value js-input" placeholder="">
+      <input name="MAIN[]" data-instruction="COPY" class="js-main-value-more js-input">
+    </div>
+  </div>
+</div>
+
+<div class="js-template-env" style="display: none">
+  <div class="form-field-block js-form-field-block">
+    <div class="field-label">
+      <label>ENV</label>
+      <div><a href="https://docs.docker.com/v1.8/reference/builder/#env" target="_blank" tabindex="-1">Docs</a></div>
+    </div>
+
+    <div class="field-body">
+      <input name="MAIN[]" data-instruction="ENV" class="js-main-value js-input" placeholder="Key"> =
+      <input name="MAIN[]" data-instruction="ENV" class="js-main-value-more js-input" placeholder="VALUE">
+    </div>
+  </div>
+</div>
+
+<div class="js-template-workdir" style="display: none">
+  <div class="form-field-block js-form-field-block">
+    <div class="field-label">
+      <label>WORKDIR</label>
+      <div><a href="https://docs.docker.com/v1.8/reference/builder/#workdir" target="_blank" tabindex="-1">Docs</a></div>
+    </div>
+
+    <div class="field-body">
+      <input name="MAIN[]" data-instruction="WORKDIR" class="js-main-value js-input" placeholder="Path">
+    </div>
+  </div>
+</div>
+<script src="js/app.js"></script>
+</body></html>
